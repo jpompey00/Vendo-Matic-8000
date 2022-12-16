@@ -3,6 +3,7 @@ package com.techelevator;
 import com.techelevator.view.Menu;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -17,6 +18,7 @@ public class VendingMachineCLI {
     private static final String[] MAIN_MENU_OPTIONS = {MAIN_MENU_OPTION_DISPLAY_ITEMS, MAIN_MENU_OPTION_PURCHASE, MAIN_MENU_OPTION_EXIT};
     private static final String[] PURCHASE_MAIN_MENU_OPTIONS = {MAIN_MENU_OPTION_FEED_MONEY, MAIN_MENU_OPTION_SELECT_PRODUCT, MAIN_MENU_OPTION_FINISH_TRANSACTION};
     private Menu menu;
+    private Product product;
 
     public VendingMachineCLI(Menu menu) {
         this.menu = menu;
@@ -24,6 +26,7 @@ public class VendingMachineCLI {
 
     public void run() {
         //Product.readInFile();
+        Product.setInventory();
         while (true) {
             String choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
 
@@ -39,15 +42,16 @@ public class VendingMachineCLI {
         }
     }
 
-    public void dispense() {
-
-    }
-
     public void displayItems() {
         try (BufferedReader br = new BufferedReader(new FileReader("vendingmachine.csv"))) {
             String line;
             while ((line = br.readLine()) != null) {
-                System.out.println(line);
+                //System.out.println(line);
+                if(product.getStock() > 0) {
+                    System.out.println(line + "|" + product.getStock());
+                } else {
+                    System.out.println(line + "|SOLD OUT");
+                }
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -61,6 +65,7 @@ public class VendingMachineCLI {
 
             if (choice.equals(MAIN_MENU_OPTION_FEED_MONEY)) {
                 // call feed money method
+                //feedMoney();
             } else if (choice.equals(MAIN_MENU_OPTION_SELECT_PRODUCT)) {
                 // select product
                 displayItems();
@@ -72,6 +77,10 @@ public class VendingMachineCLI {
                 break;
             }
         }
+    }
+
+    public void dispense() {
+
     }
 
     public static void main(String[] args) {
