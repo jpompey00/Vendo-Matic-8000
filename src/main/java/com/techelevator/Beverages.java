@@ -8,7 +8,16 @@ public class Beverages extends Product implements Vendable{
     @Override
     public void dispense(String ID) {
         super.dispense(ID);
+        //addition
+        System.out.println(super.getName() + " " + super.getPrice()); //format get price
+        //
+
+
         System.out.println("Glug Glug, Yum!");
+
+
+        //add money remaining.
+
         super.updateStock();
     }
 }

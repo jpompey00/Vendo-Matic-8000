@@ -83,17 +83,30 @@ public class Product {
     protected void dispense(String ID) {
         for (int i = 0; i < productArrayList.size(); i++) {
             if (productArrayList.get(i).getSlotID().equalsIgnoreCase(ID)) {
-                productArrayList.get(i).dispense(ID);
+
+
+                productArrayList.get(i).dispense(ID); //implemented product name + cost + money remaining
                 break;
             }
         }
     }
 
+    protected void comparePriceToBalance(Money money, String ID){
+        //if(money.getBalance() >
+
+    }
     protected void calculateNewBalance(Money money, String ID) {
+
         for (int i = 0; i < productArrayList.size(); i++){
             if (productArrayList.get(i).getSlotID().equalsIgnoreCase(ID)){
-                money.setBalance(money.getBalance()-productArrayList.get(i).getPrice());
-                break;
+                if(money.getBalance() > productArrayList.get(i).getPrice()) {
+                    money.setBalance(money.getBalance() - productArrayList.get(i).getPrice());
+                    productArrayList.get(i).dispense(ID);
+                    break;
+                }
+                else {
+                    System.out.println("Balance not enough for this item.");
+                }
             }
         }
     }
@@ -101,6 +114,16 @@ public class Product {
     public ArrayList getProductList(){
         return this.productArrayList;
     }
+    public void showItems(){
+        for(Product i: productArrayList){
+            System.out.println(i.slotID + " " + i.name + " " + i.price + " Stock: " + i.stock);
+            //format this print better, but it works.
+            //implement sold out string when it goes <1
+        }
+
+    }
+
+
 //    public static void setInventory() {
 ////        File file = new File("vendingmachine.csv");
 ////        Scanner read = null;

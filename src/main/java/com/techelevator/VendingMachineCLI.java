@@ -46,15 +46,22 @@ public class VendingMachineCLI {
     }
 
 
-    public void displayItems() {
-        try (BufferedReader br = new BufferedReader(new FileReader("vendingmachine.csv"))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                System.out.println(line);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public void displayItems() { //change this to print out  list of all items in the vending machine and the stock
+        //use the product class
+        product.showItems(); //fixed so that it shows all the items and the price.
+        //need to format the pricing too
+
+
+
+        //DONT TOUCH OLD CODE//
+//        try (BufferedReader br = new BufferedReader(new FileReader("vendingmachine.csv"))) {
+//            String line;
+//            while ((line = br.readLine()) != null) {
+//                System.out.println(line + "5");
+//            }
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
     }
 
     public void selectProduct(){
@@ -62,8 +69,13 @@ public class VendingMachineCLI {
         Scanner input = new Scanner(System.in);
         System.out.println("Enter an ID: ");
         String userInput = input.nextLine();
-        product.calculateNewBalance(money, userInput);
-        product.dispense(userInput);
+        if(money.getBalance() > 0) { //added catch for if there's no money inserted.
+            product.calculateNewBalance(money, userInput);
+            //product.dispense(userInput); //added this to the calculateNewBalance method so it can work in the catch.
+        } else {
+            System.out.println("No money inserted.");
+
+        }
     }
 
     public void purchase() {
@@ -88,6 +100,8 @@ public class VendingMachineCLI {
                 //If product code does not exist, inform user and return to purchase();
                 //If the product is out of stock, inform user and return to purchase();
                 //If selected product is valid, dispense the item, call dispense() method.
+
+
             } else if (choice.equals(MAIN_MENU_OPTION_FINISH_TRANSACTION)) {
                 money.calculateChange();
                 break;

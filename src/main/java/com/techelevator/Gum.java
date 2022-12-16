@@ -8,6 +8,9 @@ public class Gum extends Product implements Vendable {
     @Override
     public void dispense(String ID) {
         super.dispense(ID);
+        //addition
+        System.out.println(super.getName() + " " + super.getPrice()); //format get price
+        //
         System.out.println("Chew Chew, Yum!");
         super.updateStock();
     }
