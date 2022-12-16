@@ -5,6 +5,9 @@ import com.techelevator.view.Menu;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class VendingMachineCLI {
@@ -19,6 +22,7 @@ public class VendingMachineCLI {
     private static final String[] PURCHASE_MAIN_MENU_OPTIONS = {MAIN_MENU_OPTION_FEED_MONEY, MAIN_MENU_OPTION_SELECT_PRODUCT, MAIN_MENU_OPTION_FINISH_TRANSACTION};
     private Menu menu;
     private Product product = new Product();
+    private Money money = new Money();
 
     public VendingMachineCLI(Menu menu) {
         this.menu = menu;
@@ -42,7 +46,6 @@ public class VendingMachineCLI {
     }
 
 
-
     public void displayItems() {
         try (BufferedReader br = new BufferedReader(new FileReader("vendingmachine.csv"))) {
             String line;
@@ -59,16 +62,25 @@ public class VendingMachineCLI {
         Scanner input = new Scanner(System.in);
         System.out.println("Enter an ID: ");
         String userInput = input.nextLine();
+        product.calculateNewBalance(money, userInput);
         product.dispense(userInput);
     }
 
     public void purchase() {
         while (true) {
-            System.out.println("Current Money Provided: " /*Money user added*/);
+            System.out.println("Current Money Provided: " + BigDecimal.valueOf(money.getBalance()).setScale(2, RoundingMode.HALF_UP));
             String choice = (String) menu.getChoiceFromOptions(PURCHASE_MAIN_MENU_OPTIONS);
 
             if (choice.equals(MAIN_MENU_OPTION_FEED_MONEY)) {
                 // call feed money method
+                Scanner input = new Scanner(System.in);
+                System.out.println("Insert Bills: ");
+                try{
+                    int userInput = input.nextInt();
+                    money.feedMoney(userInput);
+                }catch (InputMismatchException e){
+                    System.out.println("Please enter a valid dollar amount.");
+                }
             } else if (choice.equals(MAIN_MENU_OPTION_SELECT_PRODUCT)) {
                 // select product
                 selectProduct();
@@ -77,6 +89,7 @@ public class VendingMachineCLI {
                 //If the product is out of stock, inform user and return to purchase();
                 //If selected product is valid, dispense the item, call dispense() method.
             } else if (choice.equals(MAIN_MENU_OPTION_FINISH_TRANSACTION)) {
+                money.calculateChange();
                 break;
             }
         }
