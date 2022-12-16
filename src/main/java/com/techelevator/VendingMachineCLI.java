@@ -2,10 +2,10 @@ package com.techelevator;
 
 import com.techelevator.view.Menu;
 
-import java.io.*;
-import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 public class VendingMachineCLI {
 
@@ -18,15 +18,14 @@ public class VendingMachineCLI {
     private static final String[] MAIN_MENU_OPTIONS = {MAIN_MENU_OPTION_DISPLAY_ITEMS, MAIN_MENU_OPTION_PURCHASE, MAIN_MENU_OPTION_EXIT};
     private static final String[] PURCHASE_MAIN_MENU_OPTIONS = {MAIN_MENU_OPTION_FEED_MONEY, MAIN_MENU_OPTION_SELECT_PRODUCT, MAIN_MENU_OPTION_FINISH_TRANSACTION};
     private Menu menu;
-    private Product product;
+    private Product product = new Product();
 
     public VendingMachineCLI(Menu menu) {
         this.menu = menu;
     }
 
     public void run() {
-        //Product.readInFile();
-        Product.setInventory();
+        product.readInFile();
         while (true) {
             String choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
 
@@ -42,20 +41,25 @@ public class VendingMachineCLI {
         }
     }
 
+
+
     public void displayItems() {
         try (BufferedReader br = new BufferedReader(new FileReader("vendingmachine.csv"))) {
             String line;
             while ((line = br.readLine()) != null) {
-                //System.out.println(line);
-                if(product.getStock() > 0) {
-                    System.out.println(line + "|" + product.getStock());
-                } else {
-                    System.out.println(line + "|SOLD OUT");
-                }
+                System.out.println(line);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void selectProduct(){
+        displayItems();
+        Scanner input = new Scanner(System.in);
+        System.out.println("Enter an ID: ");
+        String userInput = input.nextLine();
+        product.dispense(userInput);
     }
 
     public void purchase() {
@@ -65,10 +69,9 @@ public class VendingMachineCLI {
 
             if (choice.equals(MAIN_MENU_OPTION_FEED_MONEY)) {
                 // call feed money method
-                //feedMoney();
             } else if (choice.equals(MAIN_MENU_OPTION_SELECT_PRODUCT)) {
                 // select product
-                displayItems();
+                selectProduct();
                 //Ask for user Input, user chooses slotID to select product.
                 //If product code does not exist, inform user and return to purchase();
                 //If the product is out of stock, inform user and return to purchase();
@@ -77,10 +80,6 @@ public class VendingMachineCLI {
                 break;
             }
         }
-    }
-
-    public void dispense() {
-
     }
 
     public static void main(String[] args) {
