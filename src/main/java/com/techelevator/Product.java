@@ -47,8 +47,10 @@ public class Product {
     }
 
     public void setStock(int stock) {
-        this.stock = stock;
-    }
+        if(stock > -1){
+            this.stock = stock;
+        }
+    } //added catch incase a stock of <0 was added.
 
     public void readInFile() {
         File file = new File("vendingmachine.csv");
