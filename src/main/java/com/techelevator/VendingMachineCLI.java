@@ -45,7 +45,7 @@ public class VendingMachineCLI {
             } else if (choice.equals(MAIN_MENU_OPTION_EXIT)) {
                 break;
             } else if (choice.equals("4")) {
-               Log.log.getSalesReport();
+               Log.log.getSalesReport(product);
             }
         }
     }

@@ -1,7 +1,6 @@
 package com.techelevator;
 
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -21,31 +20,34 @@ public class Log {
 
 
     public void log(String message) {
-        try (PrintWriter dataOutput = new PrintWriter("log.txt")) {
+        try (FileWriter dataOutput = new FileWriter("log.txt", true)) {
             DateTimeFormatter formatter
                     = DateTimeFormatter.ofPattern(
                     "dd/MM/yyyy HH:mm:ss a");
             LocalDateTime now = LocalDateTime.now();
             String dateTimeString = now.format(formatter);
             // output needed for every time money is fed, every purchase, and final change given
-            dataOutput.println(dateTimeString + " " +  message);
+            dataOutput.write(dateTimeString + " " +  message + "\n");
             System.out.println(dateTimeString + " " +  message);
         } catch (FileNotFoundException e) {
             System.err.println("Cannot open the file for writing.");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
-    public void getSalesReport() {
+    public void getSalesReport(Product product) {
         DateTimeFormatter formatter
                 = DateTimeFormatter.ofPattern(
                 "ddMMyyyy HHmmss a");
         LocalDateTime now = LocalDateTime.now();
         String dateTimeString = now.format(formatter);
-        try (PrintWriter dataOutput = new PrintWriter(dateTimeString + ".txt")) {
+        try (PrintWriter dataOutput = new PrintWriter(new File(dateTimeString + ".txt"))) {
 
             System.out.println(product.arrayList());
+
             for (int i = 0; i < product.arrayList().size(); i++) {
                 dataOutput.println(">"+ product.productArrayList.get(i).getName() + "|" + (5 - product.productArrayList.get(i).getStock()) + "\n");
-                System.out.println(">" + product.productArrayList.get(i).getName() + "|" + (5 - product.productArrayList.get(i).getStock()) + "\n");
+               // System.out.println(">" + product.productArrayList.get(i).getName() + "|" + (5 - product.productArrayList.get(i).getStock()) + "\n");
             }
             System.out.println(product.productArrayList);
         } catch (FileNotFoundException e) {
