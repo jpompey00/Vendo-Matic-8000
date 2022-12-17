@@ -1,5 +1,8 @@
 package com.techelevator;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class Money {
     private double balance;
     private double change;
@@ -19,6 +22,7 @@ public class Money {
 
     public void feedMoney(int money) {
         setBalance((balance += money));
+        Product.log.log("FEED MONEY: " + "$" + BigDecimal.valueOf(money).setScale(2, RoundingMode.HALF_UP) + " $" + BigDecimal.valueOf(getBalance()).setScale(2, RoundingMode.HALF_UP));
     }
 
 
@@ -51,40 +55,8 @@ public class Money {
         System.out.println("Quarters: " + quarters + "\n" +
                 "Dimes: " + dimes + "\n" +
                 "Nickles: " + nickles + "\n" +
-                "Total change: " + sum + "\n" +
-                "Balance: " + (int) this.balance);
+                "Total change: $" + BigDecimal.valueOf(sum).setScale(2, RoundingMode.HALF_UP) + "\n" +
+                "Balance: $" + BigDecimal.valueOf(this.balance).setScale(2,RoundingMode.HALF_UP));
+        Product.log.log("GIVE CHANGE: $" + BigDecimal.valueOf(sum).setScale(2, RoundingMode.HALF_UP) + " $" + BigDecimal.valueOf(getBalance()).setScale(2, RoundingMode.HALF_UP));
     }
-
-    public double getChange() {
-        return change;
-    }
-
-    public void setChange(double change) {
-        this.change = change;
-    }
-
-    public int getQuarters() {
-        return quarters;
-    }
-
-    public void setQuarters(int quarters) {
-        this.quarters = quarters;
-    }
-
-    public int getDimes() {
-        return dimes;
-    }
-
-    public void setDimes(int dimes) {
-        this.dimes = dimes;
-    }
-
-    public int getNickles() {
-        return nickles;
-    }
-
-    public void setNickles(int nickles) {
-        this.nickles = nickles;
-    }
-
 }

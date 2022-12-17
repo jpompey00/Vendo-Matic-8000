@@ -18,18 +18,21 @@ public class VendingMachineCLI {
     private static final String MAIN_MENU_OPTION_FEED_MONEY = "Feed Money";
     private static final String MAIN_MENU_OPTION_SELECT_PRODUCT = "Select Product";
     private static final String MAIN_MENU_OPTION_FINISH_TRANSACTION = "Finish Transaction";
-    private static final String[] MAIN_MENU_OPTIONS = {MAIN_MENU_OPTION_DISPLAY_ITEMS, MAIN_MENU_OPTION_PURCHASE, MAIN_MENU_OPTION_EXIT};
+    private static final String[] MAIN_MENU_OPTIONS = {MAIN_MENU_OPTION_DISPLAY_ITEMS, MAIN_MENU_OPTION_PURCHASE, MAIN_MENU_OPTION_EXIT, "4"};
     private static final String[] PURCHASE_MAIN_MENU_OPTIONS = {MAIN_MENU_OPTION_FEED_MONEY, MAIN_MENU_OPTION_SELECT_PRODUCT, MAIN_MENU_OPTION_FINISH_TRANSACTION};
     private Menu menu;
     private Product product = new Product();
-    private Money money = new Money();
+    public static Money money = new Money();
 
     public VendingMachineCLI(Menu menu) {
         this.menu = menu;
     }
 
+
     public void run() {
         product.readInFile();
+
+
         while (true) {
             String choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
 
@@ -41,6 +44,8 @@ public class VendingMachineCLI {
                 purchase();
             } else if (choice.equals(MAIN_MENU_OPTION_EXIT)) {
                 break;
+            } else if (choice.equals("4")) {
+               Log.log.getSalesReport();
             }
         }
     }
@@ -49,7 +54,7 @@ public class VendingMachineCLI {
     public void displayItems() { //change this to print out  list of all items in the vending machine and the stock
         //use the product class
         product.showItems(); //fixed so that it shows all the items and the price.
-        //need to format the pricing too
+
 
 
 
@@ -69,42 +74,49 @@ public class VendingMachineCLI {
         Scanner input = new Scanner(System.in);
         System.out.println("Enter an ID: ");
         String userInput = input.nextLine();
-        if(money.getBalance() > 0) { //added catch for if there's no money inserted.
-            product.calculateNewBalance(money, userInput);
-            //product.dispense(userInput); //added this to the calculateNewBalance method so it can work in the catch.
-        } else {
-            System.out.println("No money inserted.");
+        if(product.checkForID(userInput)) { // checks if the ID exists
+            if(money.getBalance() > 0) { //added catch for if there's no money inserted.
+                product.calculateNewBalance(money, userInput);
+                //product.dispense(userInput); //added this to the calculateNewBalance method so it can work in the catch.
+            } else {
+                System.out.println("No money inserted.");
 
+            }
+        } else {
+            System.out.println("Please enter valid code");
         }
+
+
     }
 
     public void purchase() {
+        label:
         while (true) {
-            System.out.println("Current Money Provided: " + BigDecimal.valueOf(money.getBalance()).setScale(2, RoundingMode.HALF_UP));
+            System.out.println("Current Money Provided: $" + BigDecimal.valueOf(money.getBalance()).setScale(2, RoundingMode.HALF_UP));
             String choice = (String) menu.getChoiceFromOptions(PURCHASE_MAIN_MENU_OPTIONS);
 
-            if (choice.equals(MAIN_MENU_OPTION_FEED_MONEY)) {
-                // call feed money method
-                Scanner input = new Scanner(System.in);
-                System.out.println("Insert Bills: ");
-                try{
-                    int userInput = input.nextInt();
-                    money.feedMoney(userInput);
-                }catch (InputMismatchException e){
-                    System.out.println("Please enter a valid dollar amount.");
-                }
-            } else if (choice.equals(MAIN_MENU_OPTION_SELECT_PRODUCT)) {
-                // select product
-                selectProduct();
-                //Ask for user Input, user chooses slotID to select product.
-                //If product code does not exist, inform user and return to purchase();
-                //If the product is out of stock, inform user and return to purchase();
-                //If selected product is valid, dispense the item, call dispense() method.
-
-
-            } else if (choice.equals(MAIN_MENU_OPTION_FINISH_TRANSACTION)) {
-                money.calculateChange();
-                break;
+            switch (choice) {
+                case MAIN_MENU_OPTION_FEED_MONEY:
+                    Scanner input = new Scanner(System.in);
+                    System.out.println("Insert Bills: ");
+                    try {
+                        int userInput = input.nextInt();
+                        if(userInput>0){
+                            money.feedMoney(userInput);
+                        }
+                        else {
+                            System.out.println("Please enter a valid dollar amount.");
+                        }
+                    } catch (InputMismatchException e) {
+                        System.out.println("Please enter a valid dollar amount.");
+                    }
+                    break;
+                case MAIN_MENU_OPTION_SELECT_PRODUCT:
+                    selectProduct();
+                    break;
+                case MAIN_MENU_OPTION_FINISH_TRANSACTION:
+                    money.calculateChange();
+                    break label;
             }
         }
     }

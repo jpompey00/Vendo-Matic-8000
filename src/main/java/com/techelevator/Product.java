@@ -1,6 +1,8 @@
 package com.techelevator;
 
 import java.io.*;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -10,26 +12,29 @@ public class Product {
     private String type;
     private String name;
     private int stock;
-    ArrayList<Product> productArrayList = new ArrayList<>(){};
+    public static Log log = new Log();
+
+    private final String SOLD_OUT = "SOLD OUT";
+    protected ArrayList<Product> productArrayList = new ArrayList<>() {
+    };
+
     public Product(String slotID, String name, Double price) {
         this.slotID = slotID;
         this.price = price;
         this.name = name;
         this.stock = 5;
+        //maybe need to add a catch for if if tries to add more than 5 items
     }
 
     public Product() {
 
     }
 
-    public void updateStock() {
-        this.stock -= 1;
-    }
-
     public int getStock() {
         return stock;
     }
-    public String getSlotID(){
+
+    public String getSlotID() {
         return slotID;
     }
 
@@ -60,18 +65,18 @@ public class Product {
             this.slotID = read.next();
             this.name = read.next();
             this.price = read.nextDouble();
-            switch (read.next()){
+            switch (read.next()) {
                 case "Chip":
-                    this.productArrayList.add(new Chips(slotID, name, price));
+                    productArrayList.add(new Chips(slotID, name, price));
                     break;
                 case "Drink":
-                    this.productArrayList.add(new Beverages(this.slotID, this.name, this.price));
+                    productArrayList.add(new Beverages(this.slotID, this.name, this.price));
                     break;
                 case "Candy":
-                    this.productArrayList.add(new Candy(this.slotID, this.name, this.price));
+                    productArrayList.add(new Candy(this.slotID, this.name, this.price));
                     break;
                 case "Gum":
-                    this.productArrayList.add(new Gum(this.slotID, this.name, this.price));
+                    productArrayList.add(new Gum(this.slotID, this.name, this.price));
                     break;
                 default:
                     return;
@@ -80,84 +85,69 @@ public class Product {
         read.close();
     }
 
+    public ArrayList<Product> arrayList() {
+        return productArrayList;
+    }
+
+    public void update() {
+        log.log(getName() + " " + getSlotID() + " $" + getPrice() + " $" +
+                BigDecimal.valueOf(VendingMachineCLI.money.getBalance()).setScale(2, RoundingMode.HALF_UP));
+        this.stock -= 1;
+    }
+
     protected void dispense(String ID) {
         for (int i = 0; i < productArrayList.size(); i++) {
             if (productArrayList.get(i).getSlotID().equalsIgnoreCase(ID)) {
-
-
                 productArrayList.get(i).dispense(ID); //implemented product name + cost + money remaining
-                break;
+
+
             }
         }
     }
 
-    protected void comparePriceToBalance(Money money, String ID){
-        //if(money.getBalance() >
-
+    public boolean checkForID(String ID) {
+        for (Product i : productArrayList) {
+            if (i.getSlotID().equalsIgnoreCase(ID)) {
+                return true;
+            }
+        }
+        return false;
     }
+
     protected void calculateNewBalance(Money money, String ID) {
 
-        for (int i = 0; i < productArrayList.size(); i++){
-            if (productArrayList.get(i).getSlotID().equalsIgnoreCase(ID)){
-                if(money.getBalance() > productArrayList.get(i).getPrice()) {
-                    money.setBalance(money.getBalance() - productArrayList.get(i).getPrice());
-                    productArrayList.get(i).dispense(ID);
-                    break;
-                }
-                else {
+        for (int i = 0; i < productArrayList.size(); i++) {
+            if (productArrayList.get(i).getSlotID().equalsIgnoreCase(ID)) {
+                if (money.getBalance() > productArrayList.get(i).getPrice()) {//a check to see if there is enouge balance
+                    if (productArrayList.get(i).getStock() > 0) { //a check for if the item is even in stock.
+                        money.setBalance(money.getBalance() - productArrayList.get(i).getPrice());
+                        productArrayList.get(i).dispense(ID);
+                        break;
+                    } else {
+                        System.out.println("PRODUCT SOLD OUT");
+                    }
+                } else {
                     System.out.println("Balance not enough for this item.");
                 }
             }
         }
     }
 
-    public ArrayList getProductList(){
-        return this.productArrayList;
-    }
-    public void showItems(){
-        for(Product i: productArrayList){
-            System.out.println(i.slotID + " " + i.name + " " + i.price + " Stock: " + i.stock);
-            //format this print better, but it works.
-            //implement sold out string when it goes <1
+    public void showItems() {
+        for (Product i : productArrayList) {
+            if (i.stock <= 0) { //if-statment to display an item is out of stock.
+
+                System.out.println(i.getSlotID() + " " + i.getName() + " $" +
+                        BigDecimal.valueOf(i.getPrice()).setScale(2, RoundingMode.HALF_UP) + " Stock: " + i.SOLD_OUT);
+                //BigDecimal.valueOf(i.getPrice()).setScale(2, RoundingMode.HALF_UP))
+            } else {
+                System.out.println(i.getSlotID() + " " + i.getName() + " $" +
+                        BigDecimal.valueOf(i.getPrice()).setScale(2, RoundingMode.HALF_UP) + " Stock: " + i.getStock());
+                //format this print better, but it works.
+            }
         }
 
     }
 
 
-//    public static void setInventory() {
-////        File file = new File("vendingmachine.csv");
-////        Scanner read = null;
-//        Product product;
-////
-////        try {
-////            read = new Scanner(file);
-////        } catch (FileNotFoundException e) {
-////            throw new RuntimeException(e);
-////        }
-//
-//        try (BufferedReader br = new BufferedReader(new FileReader("vendingmachine.csv"))) {
-//            String line;
-//            while ((line = br.readLine()) != null) {
-//                String[] split = line.split("\\|");
-//                product = new Product(split[0], split[1], Double.parseDouble(split[2]), split[3]);
-//                System.out.println(product.getName());
-//            }
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//
-//        //System.out.println(product.getName());
-//
-////        read.useDelimiter("[|\n]|(\r\n)");
-////        while (read.hasNextLine()) {
-////            //Product or item class that uses constructor to set values to read values.
-////            //Product name = new Product(slotID, name, price, type); ??
-////            String slotID = read.next();
-////            String name = read.next();
-////            Double price = read.nextDouble();
-////            String type = read.next();
-////            product = new Product(slotID, name, price, type);
-////        }
-////        read.close();
-//    }
 }
