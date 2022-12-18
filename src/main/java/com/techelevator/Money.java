@@ -52,7 +52,7 @@ public class Money {
             } else
                 break;
         }
-        System.out.println("Quarters: " + quarters + "\n" +
+        System.out.println(System.lineSeparator() + "Quarters: " + quarters + "\n" +
                 "Dimes: " + dimes + "\n" +
                 "Nickles: " + nickles + "\n" +
                 "Total change: $" + BigDecimal.valueOf(sum).setScale(2, RoundingMode.HALF_UP) + "\n" +

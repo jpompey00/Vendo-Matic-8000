@@ -32,6 +32,8 @@ public class VendingMachineCLI {
     public void run() {
         product.readInFile();
 
+        // welcome message
+        System.out.println(System.lineSeparator() + "Welcome to Vendo-Matic 800, the newest vending machine developed by Umbrella Corp.");
 
         while (true) {
             String choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
@@ -72,18 +74,18 @@ public class VendingMachineCLI {
     public void selectProduct(){
         displayItems();
         Scanner input = new Scanner(System.in);
-        System.out.println("Enter an ID: ");
+        System.out.print(System.lineSeparator() + "Enter an ID >>> ");
         String userInput = input.nextLine();
         if(product.checkForID(userInput)) { // checks if the ID exists
             if(money.getBalance() > 0) { //added catch for if there's no money inserted.
                 product.calculateNewBalance(money, userInput);
                 //product.dispense(userInput); //added this to the calculateNewBalance method so it can work in the catch.
             } else {
-                System.out.println("No money inserted.");
+                System.out.println(System.lineSeparator() + "No money inserted.");
 
             }
         } else {
-            System.out.println("Please enter valid code");
+            System.out.println(System.lineSeparator() + "Please enter a valid ID.");
         }
 
 
@@ -92,23 +94,23 @@ public class VendingMachineCLI {
     public void purchase() {
         label:
         while (true) {
-            System.out.println("Current Money Provided: $" + BigDecimal.valueOf(money.getBalance()).setScale(2, RoundingMode.HALF_UP));
+            System.out.println(System.lineSeparator() + "Current Money Provided: $" + BigDecimal.valueOf(money.getBalance()).setScale(2, RoundingMode.HALF_UP));
             String choice = (String) menu.getChoiceFromOptions(PURCHASE_MAIN_MENU_OPTIONS);
 
             switch (choice) {
                 case MAIN_MENU_OPTION_FEED_MONEY:
                     Scanner input = new Scanner(System.in);
-                    System.out.println("Insert Bills: ");
+                    System.out.print(System.lineSeparator() + "Insert Bills >>> ");
                     try {
                         int userInput = input.nextInt();
                         if(userInput>0){
                             money.feedMoney(userInput);
                         }
                         else {
-                            System.out.println("Please enter a valid dollar amount.");
+                            System.out.println(System.lineSeparator() + "Please enter a valid dollar amount.");
                         }
                     } catch (InputMismatchException e) {
-                        System.out.println("Please enter a valid dollar amount.");
+                        System.out.println(System.lineSeparator() + "Please enter a valid dollar amount.");
                     }
                     break;
                 case MAIN_MENU_OPTION_SELECT_PRODUCT:

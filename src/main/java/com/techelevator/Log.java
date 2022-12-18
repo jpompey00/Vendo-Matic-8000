@@ -20,7 +20,7 @@ public class Log {
 
 
     public void log(String message) {
-        try (FileWriter dataOutput = new FileWriter("log.txt", true)) {
+        try (FileWriter dataOutput = new FileWriter("Log.txt", true)) {
             DateTimeFormatter formatter
                     = DateTimeFormatter.ofPattern(
                     "dd/MM/yyyy HH:mm:ss a");

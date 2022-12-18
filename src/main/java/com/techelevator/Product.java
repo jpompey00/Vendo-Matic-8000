@@ -123,29 +123,37 @@ public class Product {
                 if (money.getBalance() > productArrayList.get(i).getPrice()) {//a check to see if there is enouge balance
                     if (productArrayList.get(i).getStock() > 0) { //a check for if the item is even in stock.
                         money.setBalance(money.getBalance() - productArrayList.get(i).getPrice());
+                        System.out.println();
                         productArrayList.get(i).dispense(ID);
                         break;
                     } else {
-                        System.out.println("PRODUCT SOLD OUT");
+                        System.out.println(System.lineSeparator() + "PRODUCT SOLD OUT");
                     }
                 } else {
-                    System.out.println("Balance not enough for this item.");
+                    System.out.println(System.lineSeparator() + "Balance not enough for this item.");
                 }
             }
         }
     }
 
     public void showItems() {
+        System.out.println();
         for (Product i : productArrayList) {
             if (i.stock <= 0) { //if-statment to display an item is out of stock.
 
-                System.out.println(i.getSlotID() + " " + i.getName() + " $" +
-                        BigDecimal.valueOf(i.getPrice()).setScale(2, RoundingMode.HALF_UP) + " Stock: " + i.SOLD_OUT);
+//                System.out.println(i.getSlotID() + " " + i.getName() + " $" +
+//                        BigDecimal.valueOf(i.getPrice()).setScale(2, RoundingMode.HALF_UP) + " Stock: " + i.SOLD_OUT);
+
+                // printf formatting to display items cleaner
+                System.out.printf("%-3s %-18s %-6s %-15s%n", i.getSlotID(), i.getName(), " $" +
+                        BigDecimal.valueOf(i.getPrice()).setScale(2, RoundingMode.HALF_UP), " Stock: " + i.SOLD_OUT);
                 //BigDecimal.valueOf(i.getPrice()).setScale(2, RoundingMode.HALF_UP))
             } else {
-                System.out.println(i.getSlotID() + " " + i.getName() + " $" +
-                        BigDecimal.valueOf(i.getPrice()).setScale(2, RoundingMode.HALF_UP) + " Stock: " + i.getStock());
-                //format this print better, but it works.
+//                System.out.println(i.getSlotID() + " " + i.getName() + " $" +
+//                        BigDecimal.valueOf(i.getPrice()).setScale(2, RoundingMode.HALF_UP) + " Stock: " + i.getStock());
+                System.out.printf("%-3s %-18s %-6s %-9s%n", i.getSlotID(), i.getName(), " $" +
+                        BigDecimal.valueOf(i.getPrice()).setScale(2, RoundingMode.HALF_UP), " Stock: " + i.getStock());
+                // how to format price tag based on local currency without having to manually add the $?
             }
         }
 
