@@ -17,10 +17,6 @@ public class Beverages extends Product implements Vendable {
 
         System.out.println("Glug Glug, Yum!");
 
-
-
         super.update();
-
-
     }
 }

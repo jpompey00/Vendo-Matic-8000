@@ -14,13 +14,12 @@ public class Chips extends Product implements Vendable {
         //addition
         System.out.println(super.getName() + " " + " $" +
                 BigDecimal.valueOf(super.getPrice()).setScale(2, RoundingMode.HALF_UP)); //format get price
-        //
-        System.out.println("Crunch Crunch, Yum!");
-        super.update();
 
+        System.out.println("Crunch Crunch, Yum!");
+
+        super.update();
 
         /*super.updateStock();
         super.updateTimesPurchased();*/
-
     }
 }

@@ -101,8 +101,6 @@ public class Product {
         for (int i = 0; i < productArrayList.size(); i++) {
             if (productArrayList.get(i).getSlotID().equalsIgnoreCase(ID)) {
                 productArrayList.get(i).dispense(ID); //implemented product name + cost + money remaining
-
-
             }
         }
     }
@@ -117,7 +115,6 @@ public class Product {
     }
 
     protected void calculateNewBalance(Money money, String ID) {
-
         for (int i = 0; i < productArrayList.size(); i++) {
             if (productArrayList.get(i).getSlotID().equalsIgnoreCase(ID)) {
                 if (money.getBalance() > productArrayList.get(i).getPrice()) {//a check to see if there is enouge balance
@@ -140,7 +137,6 @@ public class Product {
         System.out.println();
         for (Product i : productArrayList) {
             if (i.stock <= 0) { //if-statment to display an item is out of stock.
-
 //                System.out.println(i.getSlotID() + " " + i.getName() + " $" +
 //                        BigDecimal.valueOf(i.getPrice()).setScale(2, RoundingMode.HALF_UP) + " Stock: " + i.SOLD_OUT);
 
@@ -156,8 +152,5 @@ public class Product {
                 // how to format price tag based on local currency without having to manually add the $?
             }
         }
-
     }
-
-
 }

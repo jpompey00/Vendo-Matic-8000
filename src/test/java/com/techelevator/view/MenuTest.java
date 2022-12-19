@@ -54,7 +54,8 @@ public class MenuTest {
 		String menuDisplay = System.lineSeparator() + "1) " + options[0].toString() + System.lineSeparator() + "2) " + options[1].toString() + System.lineSeparator() + "3) "
 				+ options[2].toString() + System.lineSeparator() + System.lineSeparator() + "Please choose an option >>> ";
 
-		String expected = menuDisplay + System.lineSeparator() + "*** 4 is not a valid option ***" + System.lineSeparator() + System.lineSeparator() + menuDisplay;
+		String expected = menuDisplay + System.lineSeparator() + "*** 4 is not a valid option ***" + System.lineSeparator() + menuDisplay; // removed extra line separator before menuDisplay
+		// removed line separator at end of "not valid option" message in line 39 of Menu.java
 
 		Assert.assertEquals(expected, output.toString());
 	}
@@ -69,7 +70,7 @@ public class MenuTest {
 		String menuDisplay = System.lineSeparator() + "1) " + options[0].toString() + System.lineSeparator() + "2) " + options[1].toString() + System.lineSeparator() + "3) "
 				+ options[2].toString() + System.lineSeparator() + System.lineSeparator() + "Please choose an option >>> ";
 
-		String expected = menuDisplay + System.lineSeparator() + "*** 0 is not a valid option ***" + System.lineSeparator() + System.lineSeparator() + menuDisplay;
+		String expected = menuDisplay + System.lineSeparator() + "*** 0 is not a valid option ***" + System.lineSeparator() + menuDisplay; // removed extra line separator before menuDisplay
 
 		Assert.assertEquals(expected, output.toString());
 	}
@@ -84,7 +85,7 @@ public class MenuTest {
 		String menuDisplay = System.lineSeparator() + "1) " + options[0].toString() + System.lineSeparator() + "2) " + options[1].toString() + System.lineSeparator() + "3) "
 				+ options[2].toString() + System.lineSeparator() + System.lineSeparator() + "Please choose an option >>> ";
 
-		String expected = menuDisplay + System.lineSeparator() + "*** Mickey Mouse is not a valid option ***" + System.lineSeparator() + System.lineSeparator() + menuDisplay;
+		String expected = menuDisplay + System.lineSeparator() + "*** Mickey Mouse is not a valid option ***" + System.lineSeparator() + menuDisplay; // removed extra line separator before menuDisplay
 
 		Assert.assertEquals(expected, output.toString());
 	}

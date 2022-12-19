@@ -52,13 +52,9 @@ public class VendingMachineCLI {
         }
     }
 
-
     public void displayItems() { //change this to print out  list of all items in the vending machine and the stock
         //use the product class
         product.showItems(); //fixed so that it shows all the items and the price.
-
-
-
 
         //DONT TOUCH OLD CODE//
 //        try (BufferedReader br = new BufferedReader(new FileReader("vendingmachine.csv"))) {
@@ -87,8 +83,6 @@ public class VendingMachineCLI {
         } else {
             System.out.println(System.lineSeparator() + "Please enter a valid ID.");
         }
-
-
     }
 
     public void purchase() {

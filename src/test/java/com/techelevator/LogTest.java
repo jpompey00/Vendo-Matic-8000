@@ -1,6 +1,20 @@
 package com.techelevator;
 
+import org.junit.jupiter.api.Test;
+
 public class LogTest {
+    @Test
+    void log() {
+        // test logging output
+    }
+
+    @Test
+    void getSalesReport() {
+    }
+
+    @Test
+    void getLogList() {
+    }
 
     //==tests to run
 
