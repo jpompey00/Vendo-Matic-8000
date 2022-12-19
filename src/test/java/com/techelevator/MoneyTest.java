@@ -1,7 +1,10 @@
 package com.techelevator;
 
+import org.junit.*;
 import org.junit.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
@@ -14,32 +17,23 @@ public class MoneyTest {
     private int quarters;
     private int dimes;
     private int nickels;
+    private Money money;
 
-    Money testMon = new Money(5);
+
+    @Before
+    public void initialize(){
+       money = new Money(5);
+    }
+
+
+
+
+
     //==tests to run==
     //test that balance is being set correctly
     //test for negative input being added
 
     public String calculateChange(int balance) {
-        // old cod
-//        double sum = 0;
-//        while (balance != 0) {
-//            if (balance >= 0.25) {
-//                quarters = (int) (balance / .25);
-//                setBalance(balance - (quarters * .25));
-//                sum += (quarters * 0.25);
-//            } else if (balance >= 0.10) {
-//                dimes = (int) (balance / 0.10);
-//                setBalance(balance - (dimes * 0.10));
-//                sum += (dimes * .10);
-//            }
-//            else if (balance >= 0.05) {
-//                nickels = (int) (balance / .05);
-//                setBalance(balance - (nickels * .05));
-//                sum += (nickels * .05);
-//            } else
-//                break;
-//        }
 
         double totalChange = balance;
         int change = (int)(Math.ceil(balance*100));
@@ -54,7 +48,7 @@ public class MoneyTest {
         change=change%5;
         //int pennies = Math.round((int)change/1);
 
-        testMon.setBalance(0);
+        money.setBalance(0);
 
         int totalQuarters = quarters + (dollars * 4);
         return System.lineSeparator() +
@@ -66,13 +60,19 @@ public class MoneyTest {
     }
 
     @Test
-    public void testFeedMoney(){
-        testMon.feedMoney(5);
-        assertEquals(10.00, testMon.getBalance());
+    public void test_feed_money(){
+        money.feedMoney(5);
+        assertEquals(10.00, money.getBalance());
+    }
+    @Test (expected = NullPointerException.class)
+    public void test_money_null(){
+       money = null;
+        assertEquals(10.00, money.getBalance());
     }
 
     @Test
-    public void testChange(){
+    public void test_change(){
+
         assertEquals(System.lineSeparator() +
                 "Quarters: " + "40" + System.lineSeparator() +
                 "Dimes: " + dimes + System.lineSeparator() +

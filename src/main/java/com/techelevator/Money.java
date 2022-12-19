@@ -33,25 +33,7 @@ public class Money {
     }
 
     public void calculateChange() {
-        // old cod
-//        double sum = 0;
-//        while (balance != 0) {
-//            if (balance >= 0.25) {
-//                quarters = (int) (balance / .25);
-//                setBalance(balance - (quarters * .25));
-//                sum += (quarters * 0.25);
-//            } else if (balance >= 0.10) {
-//                dimes = (int) (balance / 0.10);
-//                setBalance(balance - (dimes * 0.10));
-//                sum += (dimes * .10);
-//            }
-//            else if (balance >= 0.05) {
-//                nickels = (int) (balance / .05);
-//                setBalance(balance - (nickels * .05));
-//                sum += (nickels * .05);
-//            } else
-//                break;
-//        }
+
 
         double totalChange = balance;
         int change = (int)(Math.ceil(balance*100));

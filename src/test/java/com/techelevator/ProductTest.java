@@ -33,22 +33,10 @@ public class ProductTest {
         product.productArrayList.add(product1);
         product.productArrayList.add(product2);
         product.productArrayList.add(product3);
-        nullProduct = new Product(null, null, null);
+        nullProduct = null;
         money = new Money(100);
 
     }
-    //=====what to test for======
-
-    //test if ID is null
-    //test if ID is not in the arraylist
-    //test if ID is in the arraylist
-
-    //test if object is sold out (stock <=0)
-    //test if object is in stock (>=1)
-    //test if stock is null
-
-    //test if items are showing correctly
-
 
 
 
@@ -99,6 +87,13 @@ public class ProductTest {
         nullProduct.setStock(-1); //do we need to include the set stock function?
         assertEquals(5, nullProduct.getStock()); //make sure stock can't be set to -1
 
+    }
+
+    @Test (expected = NullPointerException.class)
+    public void product_is_null(){
+        nullProduct = null;
+
+        assertEquals("Test Failed", "", nullProduct.getName());
     }
 
 
