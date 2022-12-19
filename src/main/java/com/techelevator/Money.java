@@ -19,7 +19,7 @@ public class Money {
 
     }
 
-    public void feedMoney(int money) {
+    public void feedMoney(double money) {
         setBalance((balance += money));
         Product.log.log("FEED MONEY: " + "$" + BigDecimal.valueOf(money).setScale(2, RoundingMode.HALF_UP) + " $" + BigDecimal.valueOf(getBalance()).setScale(2, RoundingMode.HALF_UP));
     }
@@ -66,7 +66,7 @@ public class Money {
         change=change%5;
         //int pennies = Math.round((int)change/1);
 
-        setBalance(change);
+        setBalance(0);
 
         int totalQuarters = quarters + (dollars * 4);
 

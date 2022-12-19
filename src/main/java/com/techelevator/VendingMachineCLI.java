@@ -88,7 +88,7 @@ public class VendingMachineCLI {
     public void purchase() {
         label:
         while (true) {
-            System.out.println(System.lineSeparator() + "Current Money Provided: $" + BigDecimal.valueOf(money.getBalance()).setScale(2, RoundingMode.HALF_UP));
+            System.out.println(System.lineSeparator() + "Current Balance: $" + BigDecimal.valueOf(money.getBalance()).setScale(2, RoundingMode.HALF_UP));
             String choice = (String) menu.getChoiceFromOptions(PURCHASE_MAIN_MENU_OPTIONS);
 
             switch (choice) {
@@ -96,12 +96,12 @@ public class VendingMachineCLI {
                     Scanner input = new Scanner(System.in);
                     System.out.print(System.lineSeparator() + "Insert Bills >>> ");
                     try {
-                        int userInput = input.nextInt();
-                        if(userInput>0){
+                        double userInput = input.nextDouble();
+                        if(userInput>0 && userInput % 1.00 == 0){
                             money.feedMoney(userInput);
                         }
                         else {
-                            System.out.println(System.lineSeparator() + "Please enter a valid dollar amount.");
+                            System.out.println(System.lineSeparator() + "Please enter a valid whole dollar amount.");
                         }
                     } catch (InputMismatchException e) {
                         System.out.println(System.lineSeparator() + "Please enter a valid dollar amount.");

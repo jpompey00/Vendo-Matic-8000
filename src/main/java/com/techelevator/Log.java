@@ -29,7 +29,6 @@ public class Log {
             String dateTimeString = now.format(formatter);
             // output needed for every time money is fed, every purchase, and final change given
             dataOutput.write(dateTimeString + " " +  message + System.lineSeparator());
-            System.out.println(dateTimeString + " " +  message);
         } catch (FileNotFoundException e) {
             System.err.println("Cannot open the file for writing.");
         } catch (IOException e) {
