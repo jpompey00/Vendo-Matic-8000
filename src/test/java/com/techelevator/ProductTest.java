@@ -91,7 +91,6 @@ public class ProductTest {
         assertNotNull("Test failed, name is null", nullProduct.getName());
         assertNotNull("Test failed, slotID is null", nullProduct.getSlotID());
         assertNotNull("Test failed, price is null", nullProduct.getPrice());
-
     }
 
     @Test

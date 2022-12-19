@@ -18,7 +18,7 @@ public class LogTest {
     String dateTimeString = now.format(formatter);
     @Test public void testWrite() {
         String testStr = "FEED MONEY:" + " $" + BigDecimal.valueOf(2.00).setScale(2, RoundingMode.HALF_UP) + " $" + BigDecimal.valueOf(5.00).setScale(2, RoundingMode.HALF_UP);
-        assertEquals("19/12/2022 09:57:35 AM FEED MONEY: $2.00 $5.00\n", dateTimeString + " " +  testStr + System.lineSeparator());
+        assertEquals(dateTimeString + " FEED MONEY: $2.00 $5.00", dateTimeString + " " +  testStr);
     }
     @Test
     void getSalesReport() {
