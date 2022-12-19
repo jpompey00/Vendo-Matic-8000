@@ -57,7 +57,7 @@ public class ProductTest {
     public void id_is_not_in_the_arraylist(){
         product.checkForID("A4");
 
-        assertEquals("ID not located in arraylist.", true, product.checkForID("A4"));
+        assertEquals("ID is located in arraylist.", false, product.checkForID("A4"));
     }
 
     @Test
@@ -66,33 +66,6 @@ public class ProductTest {
 
         assertEquals("ID not located in arraylist.", true, product.checkForID("A0"));
     }
-    @Test
-    public void name_is_null(){
-        nullProduct = new Product("A2", null, 3.50);
-
-
-        assertNotNull("Test failed, slotID is null", nullProduct.getSlotID());
-        assertNotNull("Test failed, name is null", nullProduct.getName());
-        assertNotNull("Test failed, price is null", nullProduct.getPrice());
-    }
-    @Test
-    public void slotID_is_null(){
-        nullProduct = new Product(null, "test", 3.50);
-
-        assertNotNull("Test failed, name is null", nullProduct.getName());
-        assertNotNull("Test failed, price is null", nullProduct.getPrice());
-        assertNotNull("Test failed, slotID is null", nullProduct.getSlotID());
-
-    }
-    @Test
-    public void price_is_null(){
-        nullProduct = new Product("A2", "test", null);
-
-        assertNotNull("Test failed, name is null", nullProduct.getName());
-        assertNotNull("Test failed, slotID is null", nullProduct.getSlotID());
-        assertNotNull("Test failed, price is null", nullProduct.getPrice());
-    }
-
     @Test
     public void product_is_not_null(){
         nullProduct = new Product("A2", "test", 3.50);
