@@ -15,11 +15,11 @@ public class VendingMachineCLI {
     private static final String MAIN_MENU_OPTION_DISPLAY_ITEMS = "Display Vending Machine Items";
     private static final String MAIN_MENU_OPTION_PURCHASE = "Purchase";
     private static final String MAIN_MENU_OPTION_EXIT = "Exit";
-    private static final String MAIN_MENU_OPTION_FEED_MONEY = "Feed Money";
+    static final String MAIN_MENU_OPTION_FEED_MONEY = "Feed Money";
     private static final String MAIN_MENU_OPTION_SELECT_PRODUCT = "Select Product";
     private static final String MAIN_MENU_OPTION_FINISH_TRANSACTION = "Finish Transaction";
     private static final String[] MAIN_MENU_OPTIONS = {MAIN_MENU_OPTION_DISPLAY_ITEMS, MAIN_MENU_OPTION_PURCHASE, MAIN_MENU_OPTION_EXIT, "4"};
-    private static final String[] PURCHASE_MAIN_MENU_OPTIONS = {MAIN_MENU_OPTION_FEED_MONEY, MAIN_MENU_OPTION_SELECT_PRODUCT, MAIN_MENU_OPTION_FINISH_TRANSACTION};
+    static final String[] PURCHASE_MAIN_MENU_OPTIONS = {MAIN_MENU_OPTION_FEED_MONEY, MAIN_MENU_OPTION_SELECT_PRODUCT, MAIN_MENU_OPTION_FINISH_TRANSACTION};
     private Menu menu;
     private Product product = new Product();
     public static Money money = new Money();
