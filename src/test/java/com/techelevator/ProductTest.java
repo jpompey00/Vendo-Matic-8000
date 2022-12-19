@@ -25,7 +25,7 @@ public class ProductTest {
         product.productArrayList.add(product1);
         product.productArrayList.add(product2);
         product.productArrayList.add(product3);
-        nullProduct = null;
+        nullProduct = new Product(null, null, null);
         money = new Money(100);
     }
 
