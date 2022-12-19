@@ -18,8 +18,5 @@ public class Gum extends Product implements Vendable {
         System.out.println("Chew Chew, Yum!");
 
         super.update();
-
-        /*super.updateStock();
-        super.updateTimesPurchased();*/
     }
 }

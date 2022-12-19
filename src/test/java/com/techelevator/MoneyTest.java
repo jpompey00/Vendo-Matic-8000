@@ -19,15 +19,10 @@ public class MoneyTest {
     private int nickels;
     private Money money;
 
-
     @Before
     public void initialize(){
        money = new Money(5);
     }
-
-
-
-
 
     //==tests to run==
     //test that balance is being set correctly
@@ -45,7 +40,7 @@ public class MoneyTest {
         dimes = Math.round((int)change/10);
         change=change%10;
         nickels = Math.round((int)change/5);
-        change=change%5;
+        //change=change%5;
         //int pennies = Math.round((int)change/1);
 
         money.setBalance(0);
@@ -64,6 +59,7 @@ public class MoneyTest {
         money.feedMoney(5);
         assertEquals(10.00, money.getBalance());
     }
+
     @Test (expected = NullPointerException.class)
     public void test_money_null(){
        money = null;
@@ -72,7 +68,6 @@ public class MoneyTest {
 
     @Test
     public void test_change(){
-
         assertEquals(System.lineSeparator() +
                 "Quarters: " + "40" + System.lineSeparator() +
                 "Dimes: " + dimes + System.lineSeparator() +
@@ -81,5 +76,4 @@ public class MoneyTest {
                 "Balance: $" + BigDecimal.valueOf(this.balance).setScale(2,RoundingMode.HALF_UP),
                 this.calculateChange(10));
     }
-
 }

@@ -27,7 +27,6 @@ public class VendingMachineCLITest {
         return "Please enter a valid whole dollar amount.";
     }
 
-
     @Test
     public void testPurchase() {
         assertEquals("Please enter a valid whole dollar amount.", purchase(2, 1.50));

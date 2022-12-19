@@ -9,12 +9,12 @@ import java.util.Scanner;
 public class Product {
     private String slotID;
     private Double price;
-    private String type;
+    //private String type;
     private String name;
     private int stock;
     public static Log log = new Log();
-
     private final String SOLD_OUT = "SOLD OUT";
+
     protected ArrayList<Product> productArrayList = new ArrayList<>() {
     };
 
@@ -23,7 +23,6 @@ public class Product {
         this.price = price;
         this.name = name;
         this.stock = 5;
-        //maybe need to add a catch for if if tries to add more than 5 items
     }
 
     public Product() {
@@ -50,7 +49,7 @@ public class Product {
         if(stock > -1){
             this.stock = stock;
         }
-    } //added catch incase a stock of <0 was added.
+    } //added catch in case a stock of <0 was added.
 
     public void readInFile() {
         File file = new File("vendingmachine.csv");
@@ -145,11 +144,9 @@ public class Product {
                         BigDecimal.valueOf(i.getPrice()).setScale(2, RoundingMode.HALF_UP), " Stock: " + i.SOLD_OUT);
                 //BigDecimal.valueOf(i.getPrice()).setScale(2, RoundingMode.HALF_UP))
             } else {
-//                System.out.println(i.getSlotID() + " " + i.getName() + " $" +
-//                        BigDecimal.valueOf(i.getPrice()).setScale(2, RoundingMode.HALF_UP) + " Stock: " + i.getStock());
                 System.out.printf("%-3s %-18s %-6s %-9s%n", i.getSlotID(), i.getName(), " $" +
                         BigDecimal.valueOf(i.getPrice()).setScale(2, RoundingMode.HALF_UP), " Stock: " + i.getStock());
-                // how to format price tag based on local currency without having to manually add the $?
+                // ^ format price tag based on local currency without manually adding $
             }
         }
     }

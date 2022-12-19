@@ -10,15 +10,11 @@ import java.util.ArrayList;
 
 public class Log {
     public static Log log = new Log();
-    private String logList = ""; // do we need this variable and getLogList()?
+    private String logList = "";
     private Product product = new Product();
     public Log(){
 
     }
-
-    //record feed money
-    //record when giving change
-    //record item bought
 
     public void log(String message) {
         try (FileWriter dataOutput = new FileWriter("Log.txt", true)) {
@@ -46,21 +42,16 @@ public class Log {
             //LocalDateTime datetime = LocalDateTime.parse(dateTimeString, DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"));
             System.out.println(System.lineSeparator() + "Sales Report file created.");
 
-            //System.out.println(product.arrayList());
-
             BigDecimal totalSales = new BigDecimal("0.00");
 
             for (int i = 0; i < product.arrayList().size(); i++) {
                 // output product name and remaining stock to file
                 dataOutput.println(product.productArrayList.get(i).getName() + "|" + (5 - product.productArrayList.get(i).getStock()));
-                // need some way to get max stock from Product object instead of hard coding 5
+                // ^ get max stock from Product object instead of hard coding 5
                 totalSales = totalSales.add(BigDecimal.valueOf(product.productArrayList.get(i).getPrice()).setScale(2, RoundingMode.HALF_UP).multiply(BigDecimal.valueOf(5 - product.productArrayList.get(i).getStock())));
-                //System.out.println("TOTAL SALES: " + totalSales);
             }
             // output total sales to file
             dataOutput.println(System.lineSeparator() + "TOTAL SALES: " + totalSales);
-
-            //System.out.println(product.productArrayList);
         } catch (FileNotFoundException e) {
             System.err.println("Cannot open the file for writing.");
         }

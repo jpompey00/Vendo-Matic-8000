@@ -18,8 +18,5 @@ public class Chips extends Product implements Vendable {
         System.out.println("Crunch Crunch, Yum!");
 
         super.update();
-
-        /*super.updateStock();
-        super.updateTimesPurchased();*/
     }
 }

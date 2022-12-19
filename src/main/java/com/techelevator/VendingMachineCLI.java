@@ -30,6 +30,7 @@ public class VendingMachineCLI {
 
 
     public void run() {
+        // read inventory file and convert to product(inventory) object
         product.readInFile();
 
         // welcome message
@@ -42,32 +43,22 @@ public class VendingMachineCLI {
                 // display vending machine items
                 displayItems();
             } else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)) {
-                // do purchase
+                // leads to purchase process menu
                 purchase();
             } else if (choice.equals(MAIN_MENU_OPTION_EXIT)) {
                 break;
             } else if (choice.equals("4")) {
+                // create and write to sales report file with total sales since machine was run
                Log.log.getSalesReport(product);
             }
         }
     }
 
-    public void displayItems() { //change this to print out  list of all items in the vending machine and the stock
-        //use the product class
-        product.showItems(); //fixed so that it shows all the items and the price.
-
-        //DONT TOUCH OLD CODE//
-//        try (BufferedReader br = new BufferedReader(new FileReader("vendingmachine.csv"))) {
-//            String line;
-//            while ((line = br.readLine()) != null) {
-//                System.out.println(line + "5");
-//            }
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
+    public void displayItems() {
+        product.showItems();
     }
 
-    public void selectProduct(){
+    public void selectProduct() {
         displayItems();
         Scanner input = new Scanner(System.in);
         System.out.print(System.lineSeparator() + "Enter an ID >>> ");
@@ -97,7 +88,7 @@ public class VendingMachineCLI {
                     System.out.print(System.lineSeparator() + "Insert Bills >>> ");
                     try {
                         double userInput = input.nextDouble();
-                        if(userInput>0 && userInput % 1.00 == 0){
+                        if(userInput>0 && userInput % 1.00 == 0) {
                             money.feedMoney(userInput);
                         }
                         else {

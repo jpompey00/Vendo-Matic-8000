@@ -34,7 +34,6 @@ public class Money {
 
     public void calculateChange() {
 
-
         double totalChange = balance;
         int change = (int)(Math.ceil(balance*100));
 
@@ -45,7 +44,7 @@ public class Money {
         dimes = Math.round((int)change/10);
         change=change%10;
         nickels = Math.round((int)change/5);
-        change=change%5;
+        //change=change%5;
         //int pennies = Math.round((int)change/1);
 
         setBalance(0);
